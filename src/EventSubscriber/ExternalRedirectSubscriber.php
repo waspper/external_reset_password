@@ -2,8 +2,8 @@
 
 namespace Drupal\external_reset_password\EventSubscriber;
 
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -54,10 +54,10 @@ class ExternalRedirectSubscriber implements EventSubscriberInterface {
   /**
    * Handler for the kernel request event.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The request event.
    */
-  public function onRequest(GetResponseEvent $event) {
+  public function onRequest(RequestEvent $event) {
     $route_name = $this->currentRouteMatch->getRouteName();
     if ($route_name == 'user.pass') {
       $config = $this->configFactory->get('external_reset_password.settings');
